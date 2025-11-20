@@ -44,11 +44,11 @@ const ExperimentMode: React.FC = () => {
   const [topPRange, setTopPRange] = useState<[number, number]>([0.7, 1.0]);
   const [topKRange, setTopKRange] = useState<[number, number]>([20, 60]);
   const [maxTokensRange, setMaxTokensRange] = useState<[number, number]>([
-    1000, 3000,
+    500, 2000,
   ]);
   const [streamResponse, setStreamResponse] = useState(false);
   const [highlightBest, setHighlightBest] = useState(true);
-  const [selectedModel, setSelectedModel] = useState("GPT-4");
+  const [selectedModel, setSelectedModel] = useState("GPT-5.1");
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
@@ -151,21 +151,16 @@ const ExperimentMode: React.FC = () => {
 
             {/* Sliders */}
             <div className="space-y-4 lg:space-y-6 mb-4 lg:mb-6">
-              <div>
-                <RangeSlider
-                  label="Temperature"
-                  value={temperatureRange}
-                  onValueChange={setTemperatureRange}
-                  min={0}
-                  max={2}
-                  step={0.01}
-                  disabled={isGenerating}
-                />
-                <div className="flex justify-between text-xs text-gray-500 mt-1">
-                  <span>Precise</span>
-                  <span>Creative</span>
-                </div>
-              </div>
+              <RangeSlider
+                label="Temperature"
+                value={temperatureRange}
+                onValueChange={setTemperatureRange}
+                min={0}
+                max={2}
+                step={0.01}
+                disabled={isGenerating}
+                helperLabels={{ left: "Precise", right: "Creative" }}
+              />
 
               <div>
                 <RangeSlider
@@ -303,21 +298,16 @@ const ExperimentMode: React.FC = () => {
 
           {/* Sliders */}
           <div className="space-y-4 lg:space-y-6 mb-4 lg:mb-6">
-            <div>
-              <RangeSlider
-                label="Temperature"
-                value={temperatureRange}
-                onValueChange={setTemperatureRange}
-                min={0}
-                max={2}
-                step={0.01}
-                disabled={isGenerating}
-              />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
-                <span>Precise</span>
-                <span>Creative</span>
-              </div>
-            </div>
+            <RangeSlider
+              label="Temperature"
+              value={temperatureRange}
+              onValueChange={setTemperatureRange}
+              min={0}
+              max={2}
+              step={0.01}
+              disabled={isGenerating}
+              helperLabels={{ left: "Precise", right: "Creative" }}
+            />
 
             <div>
               <RangeSlider

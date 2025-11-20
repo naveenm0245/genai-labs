@@ -143,22 +143,24 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
             return (
               <div
                 key={response.response_id}
-                className={`bg-white border-2 rounded-lg p-6 ${
+                className={`relative bg-white border-2 rounded-lg p-6 ${
                   isBest
                     ? "border-orange-500 shadow-lg"
                     : "border-gray-200 hover:border-gray-300"
                 }`}
               >
+                {/* Recommended Badge */}
+                {isBest && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-[10px] font-semibold tracking-wide rounded-full pt-1 pr-3 pb-1 pl-3 shadow-sm flex items-center gap-1 z-10">
+                    <Star className="w-2.5 h-2.5 fill-current" />
+                    RECOMMENDED
+                  </div>
+                )}
+
                 {/* Card Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <h3 className="text-lg font-semibold">{title}</h3>
-                    {isBest && (
-                      <span className="flex items-center gap-1 text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-medium">
-                        <Star className="w-3 h-3 fill-orange-500" />
-                        RECOMMENDED
-                      </span>
-                    )}
                   </div>
                   {response.parameters.temperature !== undefined && (
                     <span className="text-xs text-gray-500 font-medium">

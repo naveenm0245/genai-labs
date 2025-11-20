@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
-import { notoSans } from "@/config/font";
+import { inter, notoSans } from "@/config/font";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        className={`${notoSans.className} antialiased`}
+        className={`${inter.className} antialiased`}
       >
         {/* <ThemeProvider
           attribute="class"

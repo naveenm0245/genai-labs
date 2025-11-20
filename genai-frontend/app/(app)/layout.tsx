@@ -19,13 +19,9 @@ export default async function AppLayout({
     <main>
       <NextAuthProvider>
         <TrpcProvider cookies={cookieHeader}>
-          <div className="flex min-h-screen">
-            <Sidebar />
-            <main className="flex-1 p-8">
-              <Navbar />
-              {children}
-            </main>
-          </div>
+          <main>
+            {children}
+          </main>
           <Toaster richColors />
         </TrpcProvider>
       </NextAuthProvider>

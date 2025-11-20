@@ -40,6 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+*.md
+.gitignore
+
 
 .env.local
 .env.development.local
@@ -51,3 +54,5 @@ next-env.d.ts
 __pycache__/
 
 __init__.py
+
+req.txt

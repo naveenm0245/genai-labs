@@ -100,7 +100,7 @@ const RangeSlider = React.forwardRef<HTMLDivElement, RangeSliderProps>(
                 "[&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-[1.5px] [&::-moz-range-thumb]:border-stone-700 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:shadow-sm",
                 "[&::-webkit-slider-runnable-track]:h-1 [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-runnable-track]:rounded-full",
                 "[&::-moz-range-track]:h-1 [&::-moz-range-track]:bg-transparent [&::-moz-range-track]:rounded-full",
-                disabled && "opacity-50 cursor-not-allowed"
+                disabled && "cursor-not-allowed"
               )}
             />
             {/* Max thumb */}
@@ -121,7 +121,7 @@ const RangeSlider = React.forwardRef<HTMLDivElement, RangeSliderProps>(
                 "[&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-[1.5px] [&::-moz-range-thumb]:border-stone-700 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:shadow-sm",
                 "[&::-webkit-slider-runnable-track]:h-1 [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-runnable-track]:rounded-full",
                 "[&::-moz-range-track]:h-1 [&::-moz-range-track]:bg-transparent [&::-moz-range-track]:rounded-full",
-                disabled && "opacity-50 cursor-not-allowed"
+                disabled && "cursor-not-allowed"
               )}
             />
           </div>

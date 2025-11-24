@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { RangeSlider } from "../ui/range-slider";
 import { Switch } from "../ui/switch";
-import { Loader2, Play, Download, History, X } from "lucide-react";
+import {  Loader2, Play, X } from "lucide-react";
 import ComparisonView from "./ComparisonView";
 import { inter } from "@/config/font";
 import Link from "next/link";
@@ -29,7 +29,7 @@ interface ExperimentResponse {
   };
 }
 
-const ExperimentMode: React.FC = () => {
+const PlaygroundExperimentMode: React.FC = () => {
   const [prompt, setPrompt] = useState("");
   const [numResponses, setNumResponses] = useState(3);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -50,7 +50,6 @@ const ExperimentMode: React.FC = () => {
   const [streamResponse, setStreamResponse] = useState(false);
   const [highlightBest, setHighlightBest] = useState(true);
   const [selectedModel, setSelectedModel] = useState("GPT-5.1");
-  const [experimentId, setExperimentId] = useState<string | null>(null);
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
@@ -100,10 +99,6 @@ const ExperimentMode: React.FC = () => {
         prompt: data.prompt,
         responses: data.responses,
       });
-      // Store experiment ID if returned
-      if (data.experiment_id) {
-        setExperimentId(data.experiment_id);
-      }
     } catch (error) {
       console.error("Error generating experiments:", error);
       alert("Error generating experiments. Please try again.");
@@ -119,9 +114,17 @@ const ExperimentMode: React.FC = () => {
         {/* Left Panel - Controls */}
         <div className="w-full lg:w-96 bg-white lg:bg-gray-50 border-b lg:border-r border-border flex flex-col shrink-0 overflow-y-auto max-h-[50vh] lg:h-full">
           <div className="p-4 lg:p-6 border-b border-border bg-background">
-            <h1 className="text-lg lg:text-xl font-semibold tracking-tight text-orange-600 mb-4 lg:mb-6">
-              TUNER
-            </h1>
+            {/* <h1 className="text-lg lg:text-xl font-semibold tracking-tight text-orange-600 mb-4 lg:mb-6">
+              PLAYGROUND
+            </h1> */}
+            <Link href="/">
+              <h1 className="text-lg lg:text-xl font-semibold tracking-tight text-orange-600 mb-4 lg:mb-6">
+                Model Tuner Playground
+              </h1>
+            </Link>
+            <p className="text-xs text-gray-500 mb-4 lg:mb-6">
+              This is a playground for experimenting with the model.
+            </p>
 
             {/* Input Prompt */}
             <div className="mb-4 lg:mb-6">
@@ -225,7 +228,6 @@ const ExperimentMode: React.FC = () => {
             <Button
               onClick={() => {
                 setResults(null);
-                setExperimentId(null);
                 setPrompt("");
               }}
               variant="outline"
@@ -259,24 +261,6 @@ const ExperimentMode: React.FC = () => {
 
         {/* Right Panel - Results */}
         <div className="flex-1 min-w-0 overflow-hidden flex flex-col min-h-0">
-          {experimentId && (
-            <div className="bg-orange-50 border-b border-orange-200 px-6 py-3 flex items-center justify-between shrink-0">
-              <div className="flex items-center gap-2 text-sm text-orange-800">
-                <History className="w-4 h-4" />
-                <span>Experiment saved to history</span>
-              </div>
-              <Link href={`/history/${experimentId}`}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-orange-700 hover:text-orange-900 hover:bg-orange-100 gap-2"
-                >
-                  <History className="w-4 h-4" />
-                  View in History
-                </Button>
-              </Link>
-            </div>
-          )}
           <div className="flex-1 min-h-0 overflow-hidden">
             <ComparisonView
               prompt={results.prompt}
@@ -287,7 +271,6 @@ const ExperimentMode: React.FC = () => {
               }}
               onBack={() => {
                 setResults(null);
-                setExperimentId(null);
                 setPrompt("");
               }}
             />
@@ -305,9 +288,19 @@ const ExperimentMode: React.FC = () => {
       {/* Left Panel - Controls */}
       <div className="w-full lg:w-96 bg-white lg:bg-gray-50 border-b lg:border-r border-border flex flex-col shrink-0 overflow-y-auto">
         <div className="p-4 lg:p-6 border-b border-border bg-background">
-          <h1 className="text-lg lg:text-xl font-semibold tracking-tight text-orange-600 mb-4 lg:mb-6">
-            TUNER
-          </h1>
+          <Link href="/">
+            <h1 className="text-lg lg:text-xl font-semibold tracking-tight text-orange-600 mb-4 lg:mb-6">
+              Model Tuner Playground
+            </h1>
+          </Link>
+
+          {/* <h1 className="text-lg lg:text-xl font-semibold tracking-tight text-orange-600 mb-4 lg:mb-6">
+            PLAYGROUND
+          </h1> */}
+          <p className="text-xs text-gray-500 mb-4 lg:mb-6">
+            Playground provide quick experiments without signing up. For Saving
+            history, please sign in.
+          </p>
 
           {/* Input Prompt */}
           <div className="mb-4 lg:mb-6">
@@ -441,4 +434,4 @@ const ExperimentMode: React.FC = () => {
   );
 };
 
-export default ExperimentMode;
+export default PlaygroundExperimentMode;

@@ -21,6 +21,9 @@ const NavBarNew = () => {
           </Link>
 
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-stone-500">
+            <Link href="/playground" className="hover:text-stone-900 transition-colors">
+              Playground
+            </Link>
             <Link
               href="#features"
               className="hover:text-stone-900 transition-colors"

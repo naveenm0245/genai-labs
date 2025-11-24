@@ -138,7 +138,7 @@ const DashboardComponent = () => {
   // Show experiment mode
   if (mode === "experiment") {
     return (
-      <div className="flex h-[calc(100vh-2rem)] w-full">
+      <div className="flex h-full w-full">
         <div className="flex-1 min-w-0 overflow-hidden">
           <ExperimentMode />
         </div>
@@ -147,7 +147,7 @@ const DashboardComponent = () => {
   }
 
   return (
-    <div className="flex h-[calc(100vh-2rem)] w-full relative">
+    <div className="flex h-full w-full relative">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div

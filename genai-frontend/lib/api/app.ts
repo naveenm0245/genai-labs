@@ -9,7 +9,8 @@ import "dotenv/config";
 
 const app = new Hono().basePath("/api");
 
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+const BACKEND_API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
 // Chat route
 app.post("/chat", async (c: any) => {
@@ -58,36 +59,76 @@ app.post("/chat", async (c: any) => {
 // Experiments route - batch generation with parameter ranges
 app.post("/experiments/generate-batch", async (c: any) => {
   try {
-    // Check authentication
-    const { session } = await getUserAuth();
-    if (!session) {
-      return c.json({ error: "Unauthorized" }, 401);
-    }
-
     const body = await c.req.json();
 
-    // Add user_id from session to request body
-    const requestBody = {
-      ...body,
-      user_id: session.user.id,
-    };
-
-    // Proxy request to backend
-    const response = await fetch(`${BACKEND_API_URL}/generate-batch`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      return c.json({ error: `Backend error: ${errorText}` }, response.status);
+    // Try to get session, but don't fail if not authenticated (for playground)
+    let session;
+    try {
+      const authResult = await getUserAuth();
+      session = authResult.session;
+    } catch (error) {
+      // Ignore auth errors for playground mode
+      session = null;
     }
 
-    const data = await response.json();
-    return c.json(data);
+    // Check if this is a playground request (no session or explicit playground flag)
+    const isPlayground = !session || body.playground === true;
+
+    if (isPlayground) {
+      // Playground mode - call playground endpoint without saving
+      const response = await fetch(
+        `${BACKEND_API_URL}/playground/generate-batch`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body), // Don't include user_id for playground
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        return c.json(
+          { error: `Backend error: ${errorText}` },
+          response.status
+        );
+      }
+
+      const data = await response.json();
+      return c.json(data);
+    } else {
+      // Regular mode - requires authentication
+      if (!session) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      // Add user_id from session to request body
+      const requestBody = {
+        ...body,
+        user_id: session.user.id,
+      };
+
+      // Proxy request to backend
+      const response = await fetch(`${BACKEND_API_URL}/generate-batch`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        return c.json(
+          { error: `Backend error: ${errorText}` },
+          response.status
+        );
+      }
+
+      const data = await response.json();
+      return c.json(data);
+    }
   } catch (error) {
     console.error("Experiments API error:", error);
     return c.json(

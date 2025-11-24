@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Loader2, Trash2, Eye, Calendar, FlaskConical } from "lucide-react";
+import { Loader2, Trash2, Calendar, FlaskConical } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -118,23 +118,23 @@ const HistoryPage = () => {
 
   return (
     <div className="h-full w-full">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
             Experiment History
           </h1>
-          <p className="text-gray-600">
+          <p className="text-sm sm:text-base text-gray-600">
             View and manage your past LLM experiments
           </p>
         </div>
 
         {experiments.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-[calc(100vh-20rem)] text-center">
-            <FlaskConical className="w-16 h-16 text-gray-300 mb-4" />
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">
+          <div className="flex flex-col items-center justify-center h-[calc(100vh-20rem)] text-center px-4">
+            <FlaskConical className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mb-4" />
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-700 mb-2">
               No experiments yet
             </h2>
-            <p className="text-gray-500 mb-6">
+            <p className="text-sm sm:text-base text-gray-500 mb-6">
               Start experimenting to see your history here
             </p>
             <Link href="/dashboard">
@@ -144,66 +144,65 @@ const HistoryPage = () => {
             </Link>
           </div>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-3 sm:gap-4">
             {experiments.map((experiment) => {
               const bestQuality = getBestQuality(experiment.responses);
               const qualityPercentage = Math.round(bestQuality * 100);
 
               return (
-                <div
+                <Link
                   key={experiment.id}
-                  className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow"
+                  href={`/history/${experiment.id}`}
+                  className="block bg-white border border-gray-200 rounded-lg p-4 sm:p-6 hover:shadow-md transition-shadow cursor-pointer"
                 >
-                  <div className="flex items-start justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-3">
-                        <h3 className="text-lg font-semibold text-gray-900 truncate">
-                          {truncatePrompt(experiment.prompt, 80)}
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-900 break-words line-clamp-2">
+                          {experiment.prompt}
                         </h3>
                       </div>
 
-                      <div className="flex items-center gap-6 text-sm text-gray-600 mb-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-600 mb-4">
                         <div className="flex items-center gap-2">
-                          <FlaskConical className="w-4 h-4" />
+                          <FlaskConical className="w-4 h-4 shrink-0" />
                           <span>{experiment.num_responses} responses</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
-                          <span>{formatDate(experiment.created_at)}</span>
+                          <Calendar className="w-4 h-4 shrink-0" />
+                          <span className="break-words">{formatDate(experiment.created_at)}</span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                           <span className="font-medium">Best Quality:</span>
                           <div className="flex items-center gap-2">
-                            <div className="w-24 bg-gray-200 rounded-full h-2">
+                            <div className="w-20 sm:w-24 bg-gray-200 rounded-full h-2">
                               <div
                                 className="bg-orange-500 h-2 rounded-full transition-all"
                                 style={{ width: `${qualityPercentage}%` }}
                               />
                             </div>
-                            <span className="text-sm font-semibold text-gray-700">
+                            <span className="text-xs sm:text-sm font-semibold text-gray-700">
                               {qualityPercentage}%
                             </span>
                           </div>
                         </div>
                       </div>
 
-                      <p className="text-sm text-gray-500 mb-4 line-clamp-2">
+                      <p className="text-xs sm:text-sm text-gray-500 mb-4 line-clamp-2 break-words">
                         {experiment.prompt}
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 ml-4">
-                      <Link href={`/history/${experiment.id}`}>
-                        <Button variant="outline" size="sm" className="gap-2">
-                          <Eye className="w-4 h-4" />
-                          View
-                        </Button>
-                      </Link>
+                    <div className="flex items-center gap-2 sm:ml-4 shrink-0 w-full sm:w-auto">
                       <Button
                         variant="outline"
                         size="sm"
-                        className="gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
-                        onClick={() => handleDelete(experiment.id)}
+                        className="gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 flex-1 sm:flex-initial w-full sm:w-auto"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleDelete(experiment.id);
+                        }}
                         disabled={deletingId === experiment.id}
                       >
                         {deletingId === experiment.id ? (
@@ -211,11 +210,11 @@ const HistoryPage = () => {
                         ) : (
                           <Trash2 className="w-4 h-4" />
                         )}
-                        Delete
+                        <span className="hidden sm:inline">Delete</span>
                       </Button>
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

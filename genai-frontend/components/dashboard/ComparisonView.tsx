@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "../ui/button";
-import { Download, Star } from "lucide-react";
+import { Download, Star, RotateCcw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -100,34 +100,49 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
   }, responses[0]);
 
   return (
-    <div className="flex flex-col h-full w-full bg-white">
+    <div className="flex flex-col h-full w-full bg-white min-h-0">
       {/* Header */}
-      <div className="p-6 border-b border-border">
+      <div className="p-4 sm:p-6 border-b border-border shrink-0">
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <h2 className="text-xl font-semibold">
+          <div className="flex items-center gap-3 flex-wrap">
+            <h2 className="text-lg sm:text-xl font-semibold">
               Results {responses.length} Variations
             </h2>
             {highlightBest && (
               <div className="flex items-center gap-2 text-orange-500">
                 <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                <span className="text-sm font-medium">Best Overall</span>
+                <span className="text-xs sm:text-sm font-medium">
+                  Best Overall
+                </span>
               </div>
             )}
           </div>
-          <Button
-            onClick={handleExport}
-            variant="ghost"
-            size="sm"
-            className="gap-2"
-          >
-            <Download className="w-4 h-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            {onBack && (
+              <Button
+                onClick={onBack}
+                variant="outline"
+                size="sm"
+                className="gap-2 shrink-0"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span className="hidden sm:inline">New Experiment</span>
+              </Button>
+            )}
+            <Button
+              onClick={handleExport}
+              variant="ghost"
+              size="sm"
+              className="gap-2 shrink-0"
+            >
+              <Download className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* Results Grid */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 min-h-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {responses.map((response, index) => {
             const isBest =

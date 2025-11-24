@@ -158,7 +158,7 @@ const HistoryPage = () => {
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-3">
-                        <h3 className="text-base sm:text-lg font-semibold text-gray-900 break-words line-clamp-2">
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-900 wrap-break-word line-clamp-2">
                           {experiment.prompt}
                         </h3>
                       </div>
@@ -170,7 +170,9 @@ const HistoryPage = () => {
                         </div>
                         <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4 shrink-0" />
-                          <span className="break-words">{formatDate(experiment.created_at)}</span>
+                          <span className="wrap-break-word">
+                            {formatDate(experiment.created_at)}
+                          </span>
                         </div>
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                           <span className="font-medium">Best Quality:</span>
@@ -188,7 +190,7 @@ const HistoryPage = () => {
                         </div>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-gray-500 mb-4 line-clamp-2 break-words">
+                      <p className="text-xs sm:text-sm text-gray-500 mb-4 line-clamp-2 wrap-break-word">
                         {experiment.prompt}
                       </p>
                     </div>

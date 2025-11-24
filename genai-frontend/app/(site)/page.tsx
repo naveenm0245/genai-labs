@@ -218,7 +218,10 @@ const HomePage = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="py-24 lg:py-32 bg-stone-50 relative">
+      <section
+        className="py-24 lg:py-32 bg-stone-50 relative scroll-mt-20"
+        id="features"
+      >
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-16 md:text-center max-w-2xl mx-auto">
             <h2 className="text-3xl font-semibold text-stone-900 tracking-tight mb-4">
@@ -357,7 +360,10 @@ const HomePage = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-24 bg-white border-t border-stone-100">
+      <section
+        className="py-24 bg-white border-t border-stone-100 scroll-mt-20"
+        id="pricing"
+      >
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-semibold text-stone-900 tracking-tight mb-4">

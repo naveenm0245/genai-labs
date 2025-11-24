@@ -4,11 +4,17 @@ import { Button } from "../ui/button";
 import { SlidersHorizontal } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { getUserAuth } from "@/lib/auth/utils";
+import { signOut } from "next-auth/react";
+import Profile from "./Profile";
 
 const LoggedInNavBar = async () => {
   const { session } = await getUserAuth();
   if (session?.user === undefined || session?.user === null) return null;
   const user = session.user;
+
+  const logout = async () => {
+    await signOut();
+  };
   return (
     <div className="sticky top-0 z-50 w-full p-4 flex items-center justify-center m-2">
       <nav className="fixed top-0 w-full z-50 bg-stone-50/80 backdrop-blur-md border-b border-stone-200/60">
@@ -28,20 +34,18 @@ const LoggedInNavBar = async () => {
           </div>
 
           <div className="flex items-center justify-center gap-8">
-            <Link
+            {/* <Link
               href="/history"
               className="text-sm font-medium text-stone-500 hover:text-orange-600 px-3 py-2 transition-colors"
             >
               History
-            </Link>
+            </Link> */}
           </div>
 
           <div className="flex items-center gap-3">
-            <Avatar>
-              <AvatarImage src={user.image} />
-              <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
-            </Avatar>
+            <Profile user={user} />
           </div>
+          {/* <Button onClick={logout}>Logout</Button> */}
         </div>
       </nav>
     </div>

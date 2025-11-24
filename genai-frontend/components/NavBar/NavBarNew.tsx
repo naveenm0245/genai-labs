@@ -1,7 +1,7 @@
-import { SlidersHorizontal } from 'lucide-react';
-import Link from 'next/link';
-import React from 'react'
-import { Button } from '../ui/button';
+import { SlidersHorizontal } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import { Button } from "../ui/button";
 
 const NavBarNew = () => {
   return (
@@ -22,23 +22,53 @@ const NavBarNew = () => {
 
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-stone-500">
             <Link
-              href="/features"
+              href="#features"
               className="hover:text-stone-900 transition-colors"
+              scroll={true}
+              onClick={(e) => {
+                e.preventDefault();
+                const element = document.getElementById("features");
+                if (element) {
+                  const offset = 80; // Account for fixed navbar + padding
+                  const elementPosition = element.getBoundingClientRect().top;
+                  const offsetPosition =
+                    elementPosition + window.pageYOffset - offset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth",
+                  });
+                }
+              }}
             >
               Features
             </Link>
-            <Link href="#" className="hover:text-stone-900 transition-colors">
+            {/* <Link href="#" className="hover:text-stone-900 transition-colors">
               SDK
-            </Link>
+            </Link> */}
             <Link
-              href="/pricing"
+              href="#pricing"
               className="hover:text-stone-900 transition-colors"
+              scroll={true}
+              onClick={(e) => {
+                e.preventDefault();
+                const element = document.getElementById("pricing");
+                if (element) {
+                  const offset = 80; // Account for fixed navbar + padding
+                  const elementPosition = element.getBoundingClientRect().top;
+                  const offsetPosition =
+                    elementPosition + window.pageYOffset - offset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth",
+                  });
+                }
+              }}
             >
               Pricing
             </Link>
-            <Link href="#" className="hover:text-stone-900 transition-colors">
+            {/* <Link href="#" className="hover:text-stone-900 transition-colors">
               Changelog
-            </Link>
+            </Link> */}
           </div>
 
           <div className="flex items-center gap-3">
@@ -59,6 +89,6 @@ const NavBarNew = () => {
       </nav>
     </div>
   );
-}
+};
 
-export default NavBarNew
+export default NavBarNew;

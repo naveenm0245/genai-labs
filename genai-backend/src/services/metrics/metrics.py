@@ -3,10 +3,6 @@ from typing import Dict
 
 
 def calculate_quality_metrics(response: str) -> Dict[str, float]:
-    """
-    Calculate quality metrics for an LLM response.
-    Returns a dictionary with metric names and values.
-    """
     metrics = {}
     
     # 1. Completeness Score (0-1)

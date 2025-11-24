@@ -2,10 +2,22 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from loguru import logger
+from contextlib import asynccontextmanager
 from routes.chat.chat import router as chat_router
 from routes.experiments.experiments import router as experiments_router
+from core.database import connect_to_mongo, close_mongo_connection
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    await connect_to_mongo()
+    yield
+    # Shutdown
+    await close_mongo_connection()
+
+
+app = FastAPI(lifespan=lifespan)
 
 # Add CORS middleware
 app.add_middleware(

@@ -65,13 +65,19 @@ app.post("/experiments/generate-batch", async (c: any) => {
 
     const body = await c.req.json();
 
+    // Add user_id from session to request body
+    const requestBody = {
+      ...body,
+      user_id: session.user.id,
+    };
+
     // Proxy request to backend
     const response = await fetch(`${BACKEND_API_URL}/generate-batch`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {
@@ -83,6 +89,130 @@ app.post("/experiments/generate-batch", async (c: any) => {
     return c.json(data);
   } catch (error) {
     console.error("Experiments API error:", error);
+    return c.json(
+      {
+        error: "Internal server error",
+        message: error instanceof Error ? error.message : "Unknown error",
+      },
+      500
+    );
+  }
+});
+
+// Get list of experiments for user
+app.get("/experiments", async (c: any) => {
+  try {
+    // Check authentication
+    const { session } = await getUserAuth();
+    if (!session) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
+
+    const limit = c.req.query("limit") ? parseInt(c.req.query("limit")) : 50;
+    const skip = c.req.query("skip") ? parseInt(c.req.query("skip")) : 0;
+
+    // Proxy request to backend with user_id
+    const response = await fetch(
+      `${BACKEND_API_URL}/experiments?user_id=${session.user.id}&limit=${limit}&skip=${skip}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      return c.json({ error: `Backend error: ${errorText}` }, response.status);
+    }
+
+    const data = await response.json();
+    return c.json(data);
+  } catch (error) {
+    console.error("Get experiments API error:", error);
+    return c.json(
+      {
+        error: "Internal server error",
+        message: error instanceof Error ? error.message : "Unknown error",
+      },
+      500
+    );
+  }
+});
+
+// Get specific experiment by ID
+app.get("/experiments/:id", async (c: any) => {
+  try {
+    // Check authentication
+    const { session } = await getUserAuth();
+    if (!session) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
+
+    const experimentId = c.req.param("id");
+
+    // Proxy request to backend with user_id
+    const response = await fetch(
+      `${BACKEND_API_URL}/experiments/${experimentId}?user_id=${session.user.id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      return c.json({ error: `Backend error: ${errorText}` }, response.status);
+    }
+
+    const data = await response.json();
+    return c.json(data);
+  } catch (error) {
+    console.error("Get experiment API error:", error);
+    return c.json(
+      {
+        error: "Internal server error",
+        message: error instanceof Error ? error.message : "Unknown error",
+      },
+      500
+    );
+  }
+});
+
+// Delete experiment by ID
+app.delete("/experiments/:id", async (c: any) => {
+  try {
+    // Check authentication
+    const { session } = await getUserAuth();
+    if (!session) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
+
+    const experimentId = c.req.param("id");
+
+    // Proxy request to backend with user_id
+    const response = await fetch(
+      `${BACKEND_API_URL}/experiments/${experimentId}?user_id=${session.user.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      return c.json({ error: `Backend error: ${errorText}` }, response.status);
+    }
+
+    const data = await response.json();
+    return c.json(data);
+  } catch (error) {
+    console.error("Delete experiment API error:", error);
     return c.json(
       {
         error: "Internal server error",

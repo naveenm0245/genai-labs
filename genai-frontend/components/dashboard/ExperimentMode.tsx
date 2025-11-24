@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { RangeSlider } from "../ui/range-slider";
 import { Switch } from "../ui/switch";
-import { Loader2, Play, Download } from "lucide-react";
+import { Loader2, Play, Download, History } from "lucide-react";
 import ComparisonView from "./ComparisonView";
 import { inter } from "@/config/font";
+import Link from "next/link";
 
 interface ExperimentResponse {
   response_id: number;
@@ -49,6 +50,7 @@ const ExperimentMode: React.FC = () => {
   const [streamResponse, setStreamResponse] = useState(false);
   const [highlightBest, setHighlightBest] = useState(true);
   const [selectedModel, setSelectedModel] = useState("GPT-5.1");
+  const [experimentId, setExperimentId] = useState<string | null>(null);
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
@@ -98,6 +100,10 @@ const ExperimentMode: React.FC = () => {
         prompt: data.prompt,
         responses: data.responses,
       });
+      // Store experiment ID if returned
+      if (data.experiment_id) {
+        setExperimentId(data.experiment_id);
+      }
     } catch (error) {
       console.error("Error generating experiments:", error);
       alert("Error generating experiments. Please try again.");
@@ -134,7 +140,7 @@ const ExperimentMode: React.FC = () => {
             {/* Variables */}
             <div className="mb-4 lg:mb-6">
               <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 block">
-                VARIABLES
+               MODEL
               </label>
               <select
                 value={selectedModel}
@@ -237,16 +243,39 @@ const ExperimentMode: React.FC = () => {
         </div>
 
         {/* Right Panel - Results */}
-        <div className="flex-1 min-w-0 overflow-hidden">
-          <ComparisonView
-            prompt={results.prompt}
-            responses={results.responses}
-            highlightBest={highlightBest}
-            onExport={() => {
-              // Could add toast notification here
-            }}
-            onBack={() => setResults(null)}
-          />
+        <div className="flex-1 min-w-0 overflow-hidden flex flex-col">
+          {experimentId && (
+            <div className="bg-orange-50 border-b border-orange-200 px-6 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-sm text-orange-800">
+                <History className="w-4 h-4" />
+                <span>Experiment saved to history</span>
+              </div>
+              <Link href={`/history/${experimentId}`}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-orange-700 hover:text-orange-900 hover:bg-orange-100 gap-2"
+                >
+                  <History className="w-4 h-4" />
+                  View in History
+                </Button>
+              </Link>
+            </div>
+          )}
+          <div className="flex-1 overflow-hidden">
+            <ComparisonView
+              prompt={results.prompt}
+              responses={results.responses}
+              highlightBest={highlightBest}
+              onExport={() => {
+                // Could add toast notification here
+              }}
+              onBack={() => {
+                setResults(null);
+                setExperimentId(null);
+              }}
+            />
+          </div>
         </div>
       </div>
     );
@@ -281,7 +310,7 @@ const ExperimentMode: React.FC = () => {
           {/* Variables */}
           <div className="mb-4 lg:mb-6">
             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 block">
-              VARIABLES
+              MODEL
             </label>
             <select
               value={selectedModel}

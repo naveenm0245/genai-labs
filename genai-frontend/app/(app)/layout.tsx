@@ -3,8 +3,7 @@ import NextAuthProvider from "@/lib/auth/Provider";
 import TrpcProvider from "@/lib/trpc/Provider";
 import { headers } from "next/headers";
 import { Toaster } from "@/components/ui/sonner";
-import Sidebar from "@/components/Sidebar";
-import Navbar from "@/components/Navbar";
+import LoggedInNavBar from "@/components/NavBar/LoggedInNavBar";
 
 export default async function AppLayout({
   children,
@@ -19,9 +18,8 @@ export default async function AppLayout({
     <main>
       <NextAuthProvider>
         <TrpcProvider cookies={cookieHeader}>
-          <main>
-            {children}
-          </main>
+          <LoggedInNavBar />
+          <main>{children}</main>
           <Toaster richColors />
         </TrpcProvider>
       </NextAuthProvider>

@@ -22,6 +22,9 @@ import {
   Github,
   Linkedin,
   CheckCircle2,
+  BarChart3,
+  FlaskConical,
+  History,
 } from "lucide-react";
 import NavBarNew from "@/components/NavBar/NavBarNew";
 
@@ -178,7 +181,7 @@ const HomePage = () => {
                 </div>
                 <div>
                   <h1 className="text-[8px] leading-3 text-stone-500 py-2 px-4">
-                    © Powered by LLM Labs , Brain child of GenAI Labs 
+                    © Powered by LLM Labs , Brain child of GenAI Labs
                   </h1>
                 </div>
               </div>
@@ -195,7 +198,8 @@ const HomePage = () => {
           </p>
           <div className="flex flex-wrap justify-center items-center gap-12 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
             <div className="flex items-center gap-2 text-xl font-bold font-sans tracking-tighter text-stone-800">
-              <div className="w-5 h-5 bg-stone-800 rounded-full"></div> GenAI Labs
+              <div className="w-5 h-5 bg-stone-800 rounded-full"></div> GenAI
+              Labs
             </div>
             <div className="flex items-center gap-2 text-xl font-semibold font-serif text-stone-800">
               <Triangle className="w-5 h-5 fill-current" /> CSEAI
@@ -231,42 +235,43 @@ const HomePage = () => {
             {/* Feature 1 */}
             <div className="group p-8 bg-white rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl hover:shadow-stone-200/50 transition-all duration-300">
               <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6 text-orange-600 group-hover:scale-110 transition-transform">
-                <GitBranch className="w-6 h-6" />
+                <SlidersHorizontal className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-medium text-stone-900 mb-3">
-                Branch & Merge
+                Parameter Sweeps
               </h3>
               <p className="text-sm text-stone-500 leading-relaxed">
-                Create variations of your prompts, test them in parallel, and
-                merge the best performing logic back into production.
+                Systematically vary temperature, top_p, and tokens. Run batch
+                experiments to find the exact settings that yield the best
+                results.
               </p>
             </div>
 
             {/* Feature 2 */}
             <div className="group p-8 bg-white rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl hover:shadow-stone-200/50 transition-all duration-300">
               <div className="w-12 h-12 bg-stone-100 rounded-xl flex items-center justify-center mb-6 text-stone-700 group-hover:scale-110 transition-transform">
-                <Zap className="w-6 h-6" />
+                <BarChart3 className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-medium text-stone-900 mb-3">
-                Latency Benchmarking
+                Automated Metrics
               </h3>
               <p className="text-sm text-stone-500 leading-relaxed">
-                See exactly how many milliseconds each token costs. Optimize for
-                speed without sacrificing quality.
+                Instantly score responses on coherence, completeness, and
+                structural quality using our proprietary metric algorithms.
               </p>
             </div>
 
             {/* Feature 3 */}
             <div className="group p-8 bg-white rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl hover:shadow-stone-200/50 transition-all duration-300">
               <div className="w-12 h-12 bg-stone-100 rounded-xl flex items-center justify-center mb-6 text-stone-700 group-hover:scale-110 transition-transform">
-                <Code2 className="w-6 h-6" />
+                <FlaskConical className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-medium text-stone-900 mb-3">
-                Typescript SDK
+                Visual Comparison
               </h3>
               <p className="text-sm text-stone-500 leading-relaxed">
-                Export your tuned parameters directly to a type-safe SDK. No
-                more magic numbers in your codebase.
+                Compare outputs side-by-side. Identify patterns and outliers
+                with a dashboard designed for high-velocity iteration.
               </p>
             </div>
           </div>
@@ -274,36 +279,43 @@ const HomePage = () => {
           {/* Large Feature Layout */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="p-10 bg-stone-900 rounded-2xl text-white flex flex-col justify-between h-[400px] relative overflow-hidden">
-              <div className="relative z-10">
-                <h3 className="text-xl font-medium mb-2">Regression Testing</h3>
-                <p className="text-stone-400 text-sm max-w-sm">
-                  Ensure new prompts don&apos;t break old edge cases. Automatic
-                  evaluation against your test suite.
+              <div className="relative z-10 mb-8 pb-8">
+                <h3 className="text-xl font-medium mb-3">
+                  Data-Driven Decisions
+                </h3>
+                <p className="text-stone-400 text-sm max-w-sm leading-relaxed">
+                  Turn qualitative &quot;vibes&quot; into quantitative data. Our
+                  scoring engine evaluates every response, giving you objective
+                  benchmarks.
                 </p>
               </div>
 
               {/* Code Abstract Visual */}
-              <div className="absolute right-0 bottom-0 w-3/4 h-3/4 bg-stone-800 rounded-tl-2xl p-6 border-t border-l border-stone-700 shadow-2xl">
+              <div className="absolute right-0 bottom-0 w-1/2 h-[60%] bg-stone-800 rounded-tl-2xl p-6 border-t border-l border-stone-700 shadow-2xl">
                 <div className="flex gap-2 mb-4">
                   <div className="w-3 h-3 rounded-full bg-red-500/20"></div>
                   <div className="w-3 h-3 rounded-full bg-yellow-500/20"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500/20"></div>
                 </div>
                 <div className="space-y-3 font-mono text-xs text-stone-400">
-                  <div className="flex gap-4">
-                    <span className="text-blue-400">PASS</span>{" "}
-                    <span>testEdgeCase_JSON()</span>
+                  <div className="flex gap-4 justify-between border-b border-stone-700 pb-2">
+                    <span className="text-stone-500">METRIC</span>
+                    <span className="text-stone-500">SCORE</span>
                   </div>
-                  <div className="flex gap-4">
-                    <span className="text-blue-400">PASS</span>{" "}
-                    <span>testLatencyBound()</span>
+                  <div className="flex gap-4 justify-between">
+                    <span className="text-blue-400">Coherence</span>
+                    <span className="text-white">0.98</span>
                   </div>
-                  <div className="flex gap-4">
-                    <span className="text-red-400">FAIL</span>{" "}
-                    <span>testHallucination()</span>
+                  <div className="flex gap-4 justify-between">
+                    <span className="text-purple-400">Completeness</span>
+                    <span className="text-white">0.95</span>
                   </div>
-                  <div className="pl-12 text-stone-600">
-                    // Expected null, got &quot;Yes&quot;
+                  <div className="flex gap-4 justify-between">
+                    <span className="text-orange-400">Structure</span>
+                    <span className="text-white">1.00</span>
+                  </div>
+                  <div className="pt-2 text-stone-600 text-[10px]">
+                    // Analysis complete
                   </div>
                 </div>
               </div>
@@ -311,23 +323,23 @@ const HomePage = () => {
 
             <div className="p-10 bg-orange-500 rounded-2xl text-white flex flex-col justify-between h-[400px] relative overflow-hidden">
               <div className="relative z-10">
-                <h3 className="text-xl font-medium mb-2">
-                  Collaborative Playground
-                </h3>
+                <h3 className="text-xl font-medium mb-2">Experiment History</h3>
                 <p className="text-orange-100 text-sm max-w-sm">
-                  Share prompt versions with your team via a simple URL. Gather
-                  feedback instantly.
+                  Never lose a breakthrough. Automatically save every
+                  experiment, response, and configuration to your history for
+                  future reference.
                 </p>
               </div>
 
-              {/* Cursor Visual */}
+              {/* History Visual */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative">
-                  <div className="w-12 h-12 bg-white rounded-full shadow-xl animate-bounce flex items-center justify-center">
-                    <Users className="w-5 h-5 text-orange-600" />
+                  <div className="w-16 h-16 bg-white rounded-2xl shadow-xl flex items-center justify-center transform rotate-6 transition-transform hover:rotate-0">
+                    <History className="w-8 h-8 text-orange-600" />
                   </div>
-                  <div className="absolute top-8 left-8 bg-stone-900 text-white text-[10px] px-2 py-1 rounded-md shadow-lg whitespace-nowrap">
-                    Sarah is editing...
+                  <div className="absolute top-10 left-10 bg-stone-900 text-white text-[10px] px-3 py-1.5 rounded-full shadow-lg whitespace-nowrap flex items-center gap-2">
+                    <CheckCircle2 className="w-3 h-3 text-green-400" />
+                    Experiment #42 Saved
                   </div>
                 </div>
               </div>
@@ -625,14 +637,14 @@ const HomePage = () => {
                       Observability
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link
                       href="#"
                       className="hover:text-stone-900 transition-colors"
                     >
                       Enterprise
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               <div>
@@ -662,14 +674,14 @@ const HomePage = () => {
                       Blog
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link
                       href="#"
                       className="hover:text-stone-900 transition-colors"
                     >
                       Community
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               <div>
@@ -704,7 +716,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className="mt-16 pt-8 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-stone-400">
-            <p>&copy; 2024 Model Tuner Inc. All rights reserved.</p>
+            <p>&copy; 2025 Model Tuner Inc. All rights reserved.</p>
             <div className="flex gap-6">
               <Link href="#" className="hover:text-stone-900">
                 Privacy Policy

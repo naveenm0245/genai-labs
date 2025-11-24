@@ -5,10 +5,11 @@ import { db } from "@/lib/db/index";
 import { users } from "@/lib/db/schema/auth";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import "dotenv/config";
 
 const app = new Hono().basePath("/api");
 
-const BACKEND_API_URL = env.BACKEND_API_URL || "http://localhost:8000";
+const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
 // Chat route
 app.post("/chat", async (c: any) => {

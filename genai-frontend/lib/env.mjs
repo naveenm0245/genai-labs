@@ -21,11 +21,7 @@ export const env = createEnv({
     ),
     GOOGLE_CLIENT_ID: z.string().min(1),
     GOOGLE_CLIENT_SECRET: z.string().min(1),
-    BACKEND_API_URL: z
-      .string()
-      .url()
-      .optional()
-      .default("http://localhost:8000"),
+    NEXT_PUBLIC_BACKEND_URL: z.string().url().optional().default("http://localhost:8000"),
   },
   client: {
     // NEXT_PUBLIC_PUBLISHABLE_KEY: z.string().min(1),

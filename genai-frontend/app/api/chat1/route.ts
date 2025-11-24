@@ -1,7 +1,8 @@
 import { getUserAuth } from "@/lib/auth/utils";
 import { env } from "@/lib/env.mjs";
 
-const BACKEND_API_URL = env.BACKEND_API_URL || "http://localhost:8000";
+const BACKEND_API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
 export async function POST(request: Request) {
   try {

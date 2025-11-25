@@ -68,8 +68,6 @@ class ExperimentResponse(BaseModel):
 
 @router.post("/generate-batch")
 async def generate_batch(request: ExperimentRequest):
-    messages = [{"role": "user", "content": request.prompt}]
-    
     # Generate parameter combinations
     parameter_combinations = []
     
@@ -115,6 +113,18 @@ async def generate_batch(request: ExperimentRequest):
     async def generate_single_response(idx: int, params: dict):
         """Generate a single response with error handling."""
         try:
+            # Build messages with system instruction for short responses when max_tokens is low
+            max_tokens_value = params.get("max_tokens", 2048)
+            system_messages = []
+            
+            if max_tokens_value < 200:
+                system_messages.append({
+                    "role": "system",
+                    "content": f"Provide a brief, concise answer. Keep your response under {max_tokens_value} tokens. Complete your thought within this limit - do not cut off mid-sentence."
+                })
+            
+            messages = system_messages + [{"role": "user", "content": request.prompt}]
+            
             response_content = await async_chat(messages, **params)
             metrics = calculate_quality_metrics(response_content)
             
@@ -229,8 +239,6 @@ async def playground_generate_batch(request: PlaygroundRequest):
     Playground endpoint - generates responses without saving to database.
     No authentication required, uses dummy user_id for compatibility.
     """
-    messages = [{"role": "user", "content": request.prompt}]
-    
     # Generate parameter combinations
     parameter_combinations = []
     
@@ -283,6 +291,18 @@ async def playground_generate_batch(request: PlaygroundRequest):
     async def generate_single_response(idx: int, params: dict):
         """Generate a single response with error handling."""
         try:
+            # Build messages with system instruction for short responses when max_tokens is low
+            max_tokens_value = params.get("max_tokens", 2048)
+            system_messages = []
+            
+            if max_tokens_value < 200:
+                system_messages.append({
+                    "role": "system",
+                    "content": f"Provide a brief, concise answer. Keep your response under {max_tokens_value} tokens. Complete your thought within this limit - do not cut off mid-sentence."
+                })
+            
+            messages = system_messages + [{"role": "user", "content": request.prompt}]
+            
             response_content = await async_chat(messages, **params)
             metrics = calculate_quality_metrics(response_content)
             

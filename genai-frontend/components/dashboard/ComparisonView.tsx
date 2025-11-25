@@ -151,7 +151,12 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
             const codeBlock = extractCodeBlock(response.content);
             const description = extractDescription(response.content);
             const title = getVariationTitle(response, index);
+            const completeness = response.metrics.completeness;
             const coherence = response.metrics.coherence;
+            const lengthAppropriateness =
+              response.metrics.length_appropriateness;
+            const structuralQuality = response.metrics.structural_quality;
+            const overallQuality = response.metrics.overall_quality;
             const latency =
               response.metrics.latency || Math.floor(Math.random() * 100) + 50; // Fallback if not provided
 
@@ -414,6 +419,47 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
 
                 {/* Metrics */}
                 <div className="space-y-3 mt-4">
+                  {/* Overall Quality */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                        OVERALL QUALITY
+                      </span>
+                      <span className="text-xs font-semibold text-gray-700">
+                        {(overallQuality * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-orange-600 h-2 rounded-full transition-all"
+                        style={{
+                          width: `${overallQuality * 100}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Completeness */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                        COMPLETENESS
+                      </span>
+                      <span className="text-xs font-semibold text-gray-700">
+                        {(completeness * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-orange-500 h-2 rounded-full transition-all"
+                        style={{
+                          width: `${completeness * 100}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Coherence */}
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
@@ -425,7 +471,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
-                        className="bg-orange-500 h-2 rounded-full transition-all"
+                        className="bg-orange-400 h-2 rounded-full transition-all"
                         style={{
                           width: `${coherence * 100}%`,
                         }}
@@ -433,7 +479,48 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  {/* Length Appropriateness */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                        LENGTH APPROPRIATENESS
+                      </span>
+                      <span className="text-xs font-semibold text-gray-700">
+                        {(lengthAppropriateness * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-orange-300 h-2 rounded-full transition-all"
+                        style={{
+                          width: `${lengthAppropriateness * 100}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Structural Quality */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                        STRUCTURAL QUALITY
+                      </span>
+                      <span className="text-xs font-semibold text-gray-700">
+                        {(structuralQuality * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-orange-200 h-2 rounded-full transition-all"
+                        style={{
+                          width: `${structuralQuality * 100}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Latency */}
+                  <div className="flex items-center justify-between pt-1 border-t border-gray-200">
                     <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
                       LATENCY
                     </span>
